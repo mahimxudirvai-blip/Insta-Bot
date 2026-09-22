@@ -6,25 +6,21 @@
   "nickNameOnStart": "InstaBOT",
   "env": {
     "token": "chat.api.toke.neokex.ica.token.can.change.a9y.2ime.ok",
-    "url": "https://nkx-ica.neokex.xyz",
-    "notes": "Optional secrets/endpoints for custom commands. Read from the environment when left blank (INSTABOT_TOKEN / INSTABOT_URL). Use them for a custom music server or any external API your commands call."
+    "url": "https://nkx-ica.neokex.xyz"
   },
   "server": {
     "url": "https://nkx-ica.neokex.xyz",
     "token": "chat.api.toke.neokex.ica.token.can.change.a9y.2ime.ok",
-    "timeout": 60000,
-    "notes": "The shared ig-chat-api-server. url + token are the SAME for every bot and are intentionally global: one server hosts many accounts. Each bot is identified by the Instagram account id (ds_user_id) inside its own cookies, which it pushes to the server; the server returns that id and the bot adopts it. There is no per-bot id and no per-bot token. Point these at your own server instead only if you run a separate deployment (IG_API_SERVER / IG_API_TOKEN override whatever is here)."
+    "timeout": 60000
   },
   "account": {
     "proxy": null,
-    "userAgent": null,
-    "notes": "Instagram login is cookie-only. Put your Instagram cookies in account.txt: a Netscape cookie file (Cookie-Editor export), a sessionid=...; ds_user_id=...; csrftoken=... string, or a JSON array of cookie objects. sessionid and ds_user_id are required. proxy is an optional HTTP(S) proxy URL and userAgent overrides the default Instagram Android user agent."
+    "userAgent": null
   },
   "music": {
     "enable": true,
     "apiUrl": "",
-    "apiToken": "",
-    "notes": "Song search for the sing command. Leave apiUrl/apiToken blank to search Instagram's own music catalogue. Point them at your music server to search there instead; {query} is replaced with the song text."
+    "apiToken": ""
   },
   "antiInbox": false,
   "noPrefix": false,
@@ -32,5 +28,37 @@
     "enable": true,
     "message": "Welcome %1 to %2! 👋",
     "threadIDs": [],
-    "selfMessage": "Thanks for inviting me to %2 💋. Type {prefix}help to see all available commands.",
-    "notes": "Greet members added to a group
+    "selfMessage": "Thanks for inviting me to %2. Type {prefix}help to see all available commands."
+  },
+  "leave": {
+    "enable": true,
+    "message": "%1 left %2. 👋",
+    "threadIDs": []
+  },
+  "adminOnly": {
+    "enable": false,
+    "ignoreCommands": []
+  },
+  "whiteList": {
+    "enable": false,
+    "userIDs": [],
+    "threadIDs": []
+  },
+  "hideNotiMessage": {
+    "commandNotFound": false,
+    "adminOnly": false,
+    "userBanned": false,
+    "needRoleToUseCommand": false
+  },
+  "cooldown": {
+    "default": 1
+  },
+  "selfListen": true,
+  "listenEvents": true,
+  "autoMarkRead": false,
+  "autoMarkDelivery": true,
+  "autoReconnect": true,
+  "restartListenInterval": 3600000,
+  "logEvents": {
+    "disableAll": false,
+    "
