@@ -1,52 +1,56 @@
 "use strict";
 
-const fs = require("fs");
-const path = require("path");
-
-const restartFile = path.join(process.cwd(), "restart.json");
+const fs = require("fs-extra");
 
 module.exports = {
-  config: {
-    name: "restart",
-    aliases: ["rs"],
-    author: "ChatGPT",
-    category: "admin",
-    role: 2,
-    cooldown: 5,
-    description: {
-      en: "Restart the bot"
-    }
-  },
+	config: {
+		name: "restart",
+		version: "1.1",
+		author: "NTKhang + Edit",
+		countDown: 5,
+		role: 2,
+		description: {
+			en: "Restart bot"
+		},
+		category: "Owner",
+		guide: {
+			en: "{pn}"
+		}
+	},
 
-  onLoad: async ({ api }) => {
-    try {
-      if (!fs.existsSync(restartFile)) return;
+	langs: {
+		en: {
+			restarting: "🔄 | Restarting..."
+		}
+	},
 
-      const data = JSON.parse(fs.readFileSync(restartFile, "utf8"));
-      fs.unlinkSync(restartFile);
+	onLoad: async function ({ api }) {
+		const pathFile = `${__dirname}/tmp/restart.txt`;
 
-      const time = ((Date.now() - data.time) / 1000).toFixed(1);
+		if (fs.existsSync(pathFile)) {
+			const [threadID, time] = fs.readFileSync(pathFile, "utf8").split(" ");
+			const seconds = ((Date.now() - Number(time)) / 1000).toFixed(1);
 
-      api.sendMessage(
-        `✅ Restart Done\n⏱️ ${time}s`,
-        data.threadID
-      );
-    } catch {}
-  },
+			api.sendMessage(
+				`✅ | Restart Done\n⏱️ | Time: ${seconds}s`,
+				threadID
+			);
 
-  onStart: async ({ message, event }) => {
-    fs.writeFileSync(
-      restartFile,
-      JSON.stringify({
-        threadID: event.threadID,
-        time: Date.now()
-      })
-    );
+			fs.unlinkSync(pathFile);
+		}
+	},
 
-    await message.reply("🔄 Restarting...");
+	onStart: async function ({ message, event, getLang }) {
+		const dir = `${__dirname}/tmp`;
+		const pathFile = `${dir}/restart.txt`;
 
-    setTimeout(() => {
-      process.kill(process.pid, "SIGTERM");
-    }, 500);
-  }
+		if (!fs.existsSync(dir))
+			fs.mkdirSync(dir, { recursive: true });
+
+		fs.writeFileSync(pathFile, `${event.threadID} ${Date.now()}`);
+
+		await message.reply(getLang("restarting"));
+
+		process.exit(2);
+	}
 };
