@@ -60,5 +60,6 @@
   "autoReconnect": true,
   "restartListenInterval": 3600000,
   "logEvents": {
-    "disableAll": false,
-    "
+    "disableAll": false
+  }
+}
